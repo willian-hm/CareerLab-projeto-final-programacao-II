@@ -45,18 +45,20 @@ class UsuarioDAO{
         } else {
             return false;
         }
-    }
+    }   
 
-    public static function listarUsuarios($idusuario){
-        $sql = "SELECT * FROM usuarios where idusuario!=?";
+    public static function buscarUsuarios($idusuario, $nome){
+        $sql = "SELECT * FROM usuarios where idusuario!=? AND LOWER(nome) LIKE LOWER(?)";
 
         $conexao = ConexaoBD::conectar();
         $stmt = $conexao->prepare($sql);
         $stmt->bindParam(1, $idusuario);
+        $nome = "%".$nome."%";
+        
+        $stmt->bindParam(2, $nome);
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
     }
 
 }

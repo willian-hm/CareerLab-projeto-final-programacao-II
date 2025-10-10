@@ -1,6 +1,7 @@
 <?php include "incs/valida-sessao.php"; ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title>CareerLab</title>
@@ -13,30 +14,36 @@
       display: flex;
       flex-direction: column;
     }
+
     main {
       flex: 1;
     }
+
     .card {
       border-radius: 16px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
+
     .usuario-bloco {
       background: #ffffff;
       border-radius: 10px;
       padding: 15px 20px;
       margin-bottom: 15px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
+
     .btn-careerlab {
       background: linear-gradient(90deg, #4e73df, #1cc88a);
       border: none;
       color: white;
     }
+
     .btn-careerlab:hover {
       opacity: 0.9;
     }
   </style>
 </head>
+
 <body>
 
   <!-- Navbar -->
@@ -55,16 +62,34 @@
 
   <!-- Conteúdo -->
   <main class="container d-flex justify-content-center align-items-center my-5">
-      <?php
-        require_once "src/UsuarioDAO.php";
-        $usuarios = UsuarioDAO::listarUsuarios($_SESSION['idusuario']['idusuario']);
+    <?php
+    require_once "src/UsuarioDAO.php";
 
+    if (!isset($_GET['nome'])) {
+      $_GET['nome'] = '';
+    }
 
-      ?>
+    $usuarios = UsuarioDAO::buscarUsuarios($_SESSION['idusuario'], $_GET['nome']);
 
-        <div class="card w-75 mx-auto p-4 text-center">
+    ?>
+
+    <div class="card w-75 mx-auto p-4 text-center">
+
       <h2 class="mb-4">Bem-vindo(a), <?= $_SESSION['nome'] ?? $_SESSION['email']; ?>!</h2>
       <h4 class="mb-4">Explorar perfis</h4>
+
+      <form class="" action="">
+        <div class="row">
+          <div class="col-10">
+            <input type="text" name="nome" class="form-control mb-4 " placeholder="Buscar usuários por nome...">
+          </div>
+          <div class="col-2">
+            <button type="submit" class="btn btn-careerlab mb-4">Buscar</button>
+          </div>
+        </div>
+
+      </form>
+
 
       <?php foreach ($usuarios as $usuario): ?>
         <div class="usuario-bloco d-flex justify-content-between align-items-center">
@@ -72,7 +97,7 @@
           <button class="btn btn-careerlab">Seguir</button>
         </div>
       <?php endforeach; ?>
-      
+
     </div>
     </div>
   </main>
@@ -83,4 +108,5 @@
   </footer>
 
 </body>
+
 </html>

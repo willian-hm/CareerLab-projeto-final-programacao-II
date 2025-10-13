@@ -69,7 +69,7 @@
       $_GET['nome'] = '';
     }
 
-    $usuarios = UsuarioDAO::buscarUsuarios($_SESSION['idusuario'], $_GET['nome']);
+    $usuarios = UsuarioDAO::buscarUsuarioParaSeguir($_SESSION['idusuario'], $_GET['nome']);
 
     ?>
 
@@ -94,7 +94,7 @@
       <?php foreach ($usuarios as $usuario): ?>
         <div class="usuario-bloco d-flex justify-content-between align-items-center">
           <span><?= $usuario['nome']; ?></span>
-          <button class="btn btn-careerlab">Seguir</button>
+          <a href="seguir.php?idseguido=<?=$usuario['idusuario']?>" class="btn btn-careerlab">Seguir</a>
         </div>
       <?php endforeach; ?>
 

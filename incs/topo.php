@@ -38,7 +38,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link active" href="#">Início</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/index.php">Início</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
           <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
@@ -46,20 +46,3 @@
       </div>
     </div>
   </nav>
-
-  <!-- Conteúdo Principal -->
-  <main class="container d-flex flex-column justify-content-center align-items-center text-center my-5">
-    <h1 class="display-4 fw-bold text-dark">Bem-vindo ao <span style="color:#4e73df;">Career</span><span style="color:#1cc88a;">Lab</span>!</h1>
-    <p class="lead mt-3">Transforme sua carreira com conexões, aprendizado e oportunidades.</p>
-    <a href="login.php" class="btn btn-careerlab btn-lg mt-4 px-5">Acesse sua Conta</a>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-3 mt-auto">
-    <p class="mb-0">&copy; 2025 - CareerLab. Todos os direitos reservados.</p>
-  </footer>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

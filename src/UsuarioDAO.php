@@ -1,10 +1,12 @@
 <?php
 require_once "ConexaoBD.php";
 
-class UsuarioDAO{
-    public static function cadastrarUsuario($dados, $foto){
+class UsuarioDAO
+{
+    public static function cadastrarUsuario($dados, $foto)
+    {
         $conexao = ConexaoBD::conectar();
-        
+
         // Upload da foto
         $nomeFoto = uniqid() . "-" . basename($foto['name']);
         $destino = "uploads/" . $nomeFoto;
@@ -14,7 +16,7 @@ class UsuarioDAO{
                 (nome, email, senha, data_nascimento, telefone, area_id, foto) 
                 VALUES (?,?,?,?,?,?,?)";
         $stmt = $conexao->prepare($sql);
-        
+
         $senhaCriptografada = md5($dados['senha']);
         $stmt->bindParam(1, $dados['nome']);
         $stmt->bindParam(2, $dados['email']);
@@ -28,8 +30,9 @@ class UsuarioDAO{
     }
 
 
-    public static function validarUsuario($dados){
-        
+    public static function validarUsuario($dados)
+    {
+
         $senhaCriptografada = md5($dados['senha']);
         $sql = "select * from usuarios where email=? AND senha=?";
 
@@ -38,27 +41,47 @@ class UsuarioDAO{
         $stmt->bindParam(1, $dados['email']);
         $stmt->bindParam(2, $senhaCriptografada);
         $stmt->execute();
-        
+
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($stmt->rowCount() > 0) {
             return $usuario;
         } else {
             return false;
         }
-    }   
+    }
 
-    public static function buscarUsuarios($idusuario, $nome){
+    public static function buscarUsuarios($idusuario, $nome)
+    {
         $sql = "SELECT * FROM usuarios where idusuario!=? AND LOWER(nome) LIKE LOWER(?)";
 
         $conexao = ConexaoBD::conectar();
         $stmt = $conexao->prepare($sql);
         $stmt->bindParam(1, $idusuario);
-        $nome = "%".$nome."%";
-        
+        $nome = "%" . $nome . "%";
+
         $stmt->bindParam(2, $nome);
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function buscarUsuarioParaSeguir($idusuario, $nome)
+    {
+        $sql = "SELECT u. * FROM usuarios u 
+                where u.idusuario!=? AND LOWER(nome) LIKE LOWER(?)
+                AND u.idusuario NOT IN 
+                (SELECT s.idseguido FROM seguidores s WHERE s.idusuario =?
+                 );";
+
+        $conexao = ConexaoBD::conectar();
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(1, $idusuario);
+        $nome = "%" . $nome . "%";
+
+        $stmt->bindParam(2, $nome);
+        $stmt->bindParam(3, $idusuario);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

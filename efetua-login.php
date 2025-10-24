@@ -6,7 +6,7 @@
         $_SESSION['email'] = $_POST['email'];
         $_SESSION['nome'] = $usuario['nome'];
         $_SESSION['idusuario'] = $usuario['idusuario'];
-        $_SESSION['idusuario'] = $usuario['foto'];
+        $_SESSION['foto'] = $usuario['foto'];
         header("Location:home.php");
     }else{
         $_SESSION['msg'] = "Usuário ou senha inválido.";    

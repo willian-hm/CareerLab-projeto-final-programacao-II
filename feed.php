@@ -63,21 +63,55 @@
   <!-- Conteúdo -->
   <main class="container d-flex justify-content-center align-items-center my-5">
     <?php
-      $postagens = [
-          [
-              'id' => 1,
-              'titulo' => 'Minha Primeira Postagem',
-              'conteudo' => 'Este é o conteúdo da minha primeira postagem.',
-              'autor' => 'Rafael Zanelatto',
-              'data' => '2025-10-30'
-          ]
-      ];
+      require_once "PostagemDAO.php";
+      // obter o id do usuário a partir da sessão (ajuste a chave se necessário)
+      $usuarioId = $_SESSION['id_usuario'] ?? null;
+      $postagens = PostagemDAO::listarTimeline($usuarioId);
+    
+      
 
       // Mostrar todas as postagens
-      foreach ($postagens as $postagem) {
-          
-          
-      }
+     
+        ?>
+          <div class="container">
+            <div class="feed">
+              <h2>Feed</h2>
+              <div class="filters">
+                <button>TI</button>
+                <button>Marketing</button>
+                <button>Design</button>
+                <button>Outro</button>
+              </div>
+          <?php
+            foreach ($postagens as $postagem) {
+              ?>
+              <div class="post">
+               <img src= uploads/<?= $postagens['imagem'] ?> alt="Descrição da imagem">
+                <div class="post-info">
+                  <strong>Usuário Fulano</strong><br>
+                </div>
+              </div>
+          <?php
+             }
+          ?>
+
+            <div class="sidebar">
+              <div class="card">
+                <h3>Usuários</h3>
+                <input type="text" placeholder="Buscar usuário" style="width:100%; padding:5px;">
+                <p>Fernando de Noronha - <button>Seguir</button></p>
+              </div>
+              <div class="card">
+                <h3>Ranking</h3>
+                <ol>
+                  <li>1º Name - 21 EXP</li>
+                  <li>2º Name - 20 EXP</li>
+                  <li>3º Name - 15 EXP</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        <?php
 
 
     ?>
